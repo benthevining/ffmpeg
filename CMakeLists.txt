@@ -1,7 +1,5 @@
-# TODO: integration tests (build, install, run find_package)
 # TODO: Findffmpeg version checking
 # TODO: Mac universal binaries...
-# LATER: could run fate-list to get list of tests
 
 cmake_minimum_required (VERSION 3.25 FATAL_ERROR)
 
@@ -11,6 +9,10 @@ project (ffmpeg
 		 DESCRIPTION
 		 	"FFmpeg is a collection of libraries and tools to process multimedia content such as audio, video, subtitles and related metadata."
 		 HOMEPAGE_URL "https://www.ffmpeg.org/")
+
+if(PROJECT_IS_TOP_LEVEL)
+	enable_testing()
+endif()
 
 if(CMAKE_BUILD_TYPE)
 	set (BT "${CMAKE_BUILD_TYPE}")
@@ -185,7 +187,7 @@ ExternalProject_Add_Step (
 
 ExternalProject_Add_StepTargets (ffmpeg docs clean)
 
-add_test (NAME ffmpeg-tests
+add_test (NAME ffmpeg.unit
 		  COMMAND "${CMAKE_COMMAND}" 
 		  	--build "${CMAKE_BINARY_DIR}" 
 		  	--target ffmpeg-test)
@@ -202,8 +204,6 @@ install (FILES Findffmpeg.cmake
 		 COMPONENT ffmpeg)
 
 include (CPackComponent)
+cpack_add_component (ffmpeg DESCRIPTION "${ffmpeg_DESCRIPTION}")
 
-cpack_add_component (ffmpeg
-	DESCRIPTION 
-		"FFmpeg is a collection of libraries and tools to process multimedia content such as audio, video, subtitles and related metadata."
-)
+add_subdirectory (test)
