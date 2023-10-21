@@ -1,3 +1,4 @@
+# TODO: integration tests (build, install, run find_package)
 # TODO: Findffmpeg version checking
 # TODO: Mac universal binaries...
 # LATER: could run fate-list to get list of tests
