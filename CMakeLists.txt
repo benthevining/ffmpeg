@@ -1,4 +1,4 @@
-# TODO: provide Findffmpeg script (or ffmpeg-config.cmake?)
+# TODO: Findffmpeg version checking
 # TODO: Mac universal binaries...
 # LATER: could run fate-list to get list of tests
 
@@ -194,6 +194,10 @@ ExternalProject_Get_Property (ffmpeg INSTALL_DIR)
 install (DIRECTORY "${INSTALL_DIR}"
 		 DESTINATION ..
 		 USE_SOURCE_PERMISSIONS
+		 COMPONENT ffmpeg)
+
+install (FILES Findffmpeg.cmake
+		 DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/ffmpeg"
 		 COMPONENT ffmpeg)
 
 include (CPackComponent)
